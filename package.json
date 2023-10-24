@@ -4,7 +4,9 @@
   "description": "this is contact manager",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node index.js",
+    "dev": "nodemon index.js"
   },
   "repository": {
     "type": "git",
@@ -15,5 +17,12 @@
   "bugs": {
     "url": "https://github.com/jigneshbhai/Backend_contactManager/issues"
   },
-  "homepage": "https://github.com/jigneshbhai/Backend_contactManager#readme"
+  "homepage": "https://github.com/jigneshbhai/Backend_contactManager#readme",
+  "dependencies": {
+    "dotenv": "^16.3.1",
+    "express": "^4.18.2"
+  },
+  "devDependencies": {
+    "nodemon": "^3.0.1"
+  }
 }
