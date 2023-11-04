@@ -2,7 +2,7 @@ const asyncHandler = require("express-async-handler");
 const Contact = require("../models/contactModel");
 
 const getContacts = asyncHandler(async (req, res) => {
-  const contacts = await Contact.find();
+  const contacts = await Contact.find({ user_id: req.user.id });
   res.status(200).json(contacts);
 });
 
@@ -38,6 +38,11 @@ const updateContact = asyncHandler(async (req, res) => {
     throw new Error("Contact not found");
   }
 
+  if (contact.user_id.toString() != req.user.id) {
+    res.status(403);
+    throw new Error("User not have permission to update this contact");
+  }
+
   const updateContact = await Contact.findByIdAndUpdate(
     req.params.id,
     req.body,
@@ -53,8 +58,13 @@ const deleteContact = asyncHandler(async (req, res) => {
     throw new Error("Contact not found");
   }
 
-  await Contact.remove(contact);
-  res.status(200).json(contact); 
+  if (contact.user_id.toString() != req.user.id) {
+    res.status(403);
+    throw new Error("User not have permission to update this contact");
+  }
+
+  await Contact.deleteOne({ _id: req.params.id });
+  res.status(200).json(contact);
 });
 
 module.exports = {
